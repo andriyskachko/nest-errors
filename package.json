@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "scripts": {},
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "watch": "tsc -p tsconfig.build.json -w",
+    "prepublishOnly": "npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andriyskachko/nest-errors.git"
@@ -12,5 +20,13 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/andriyskachko/nest-errors/issues"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@nestjs/common": "^11.0.0",
+    "@types/express": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^11.0.0"
   }
 }
