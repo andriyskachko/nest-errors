@@ -1,0 +1,16 @@
+{
+  "name": "nest-errors",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andriyskachko/nest-errors.git"
+  },
+  "author": "https://github.com/andriyskachko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andriyskachko/nest-errors/issues"
+  }
+}
