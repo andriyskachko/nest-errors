@@ -1,10 +1,7 @@
 import { HttpStatus } from '@nestjs/common';
-import { Details, NestError } from './nest-error.interface';
+import { NestError } from './nest-error.interface';
 
-export class ValidationError<D extends Details = Details> extends NestError<D> {
+export class ValidationError extends NestError {
   readonly httpStatus = HttpStatus.BAD_REQUEST;
-
-  constructor(message: string, details?: D) {
-    super('VALIDATION_ERROR', message, details);
-  }
+  readonly code = 'VALIDATION_ERROR';
 }
