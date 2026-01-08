@@ -8,16 +8,12 @@ import {
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { NestError } from '../errors';
+import { NestErrorFilterOptions } from './nest-error-filter-options';
 
 type Optional<T> = T | undefined | null;
 
-export interface NestErrorFilterOptions {
-  /** should NotFoundException be treated as NestError */
-  passNFException: boolean;
-}
-
 @Catch()
-class NestErrorsFilter implements ExceptionFilter {
+export class NestErrorsFilter implements ExceptionFilter {
   readonly options: Optional<NestErrorFilterOptions> = null;
 
   constructor(options: Optional<NestErrorFilterOptions>) {
@@ -27,8 +23,7 @@ class NestErrorsFilter implements ExceptionFilter {
   catch(exception: NestError | HttpException | Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp(),
       res: Response = ctx.getResponse(),
-      req = ctx.getRequest(),
-      isNotFoundException = exception instanceof NotFoundException;
+      req = ctx.getRequest();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR,
       code = 'INTERNAL_ERROR',
@@ -36,7 +31,10 @@ class NestErrorsFilter implements ExceptionFilter {
       details: Optional<Record<string, unknown> | string> = null,
       name = exception?.name || 'Error';
 
-    if (this.options?.passNFException && isNotFoundException) {
+    if (
+      !this.options?.convertNestNotFoundExceptionToNestError &&
+      exception instanceof NotFoundException
+    ) {
       throw exception;
     }
 
